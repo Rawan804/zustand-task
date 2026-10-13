@@ -1,10 +1,20 @@
 import { create } from "zustand";
 
-const defaultTasks=['']
 
-const getInitialTasks=()=>{
-    const savedTasks=localStorage.getItem('tasks')
-    return savedTasks?JSON.parse(savedTasks):defaultTasks
+const getInitialTasks = () => {
+  const savedTasks = localStorage.getItem('tasks')
+
+  if (!savedTasks) {
+    return []
+  }
+  try {
+    const parsedTasks = JSON.parse(savedTasks)
+    return Array.isArray(parsedTasks)
+      ? parsedTasks.filter(
+          (task) => task && task.text?.trim() !== ''  )  : []
+  } catch {
+    return []
+  }
 }
 export const useTaskStore=create((set)=>({
     tasks:getInitialTasks(),
