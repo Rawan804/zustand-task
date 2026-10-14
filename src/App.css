@@ -61,18 +61,23 @@ body {
 }
 
 .task-text {
-  overflow-wrap: anywhere;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 }
 
 .task-item.completed .task-text {
   text-decoration: line-through;
   color: #999;
 }
-.task-actions {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
+
 
 .task-actions button {
   width: 38px;
@@ -316,4 +321,94 @@ background: #7c3aed;
 .empty {
   text-align: bottom;
   color: #9ca3af; 
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.task-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin: 0;
+  border: 2px solid #cbd5e1;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+}
+
+.task-checkbox::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border: solid white;
+  border-width: 0 0 2px 2px;
+  transform: rotate(-45deg) scale(0);
+}
+
+.task-checkbox:checked {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+.task-checkbox:checked::after {
+  transform: rotate(-45deg) scale(1);
+}
+
+.task-text,
+.task-edit-input {
+  flex: 1;
+  min-width: 0;
+}
+
+
+.delete-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: #ef4444;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.delete-btn:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+
+.edit-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  background:transparent;
+ color:#7c3aed;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.edit-btn:hover {
+  background: #7c3aed;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.edit-btn:active {
+  transform: scale(0.95);
 }

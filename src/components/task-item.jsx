@@ -18,6 +18,13 @@ export default function TaskItem(){
             {
                 tasks.map((task,index)=>(
                     <div className="task-item" key={`${task.text}-${index}`}>
+                       <input
+  type="checkbox"
+  className="task-checkbox"
+  checked={task.completed}
+  onChange={() => toogleTask(index)}
+  aria-label="completed task"
+/>
                         {editingIndex===index?(
                             <input className="task input task-edit-input"
                             value={editText}
@@ -63,29 +70,57 @@ export default function TaskItem(){
               </>
             ) : (
               <>
-                <button
-                  className="complete-btn"
-                  onClick={() => toogleTask(index)}
-                >
-                  {task.completed ? '↶' : '✓'}
-                </button>
+  
+<button
+  className="edit-btn"
+  onClick={() => {
+    setEditingIndex(index)
+    setEditText(task.text)
+  }}
+  aria-label="Edit task"
+  title="Edit task"
+>
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 20h9" />
+    <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z" />
+  </svg>
+</button>
+    
+<button
+  className="delete-btn"
+  onClick={() => setTaskToDelete(index)}
+  aria-label="Delete task"
+  title="Delete task"
+>
+  <svg
+    width="19"
+    height="19"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M3 6h18" />
+    <path d="M8 6V4h8v2" />
+    <path d="M19 6l-1 14H6L5 6" />
+    <path d="M10 11v5" />
+    <path d="M14 11v5" />
+  </svg>
+</button>
 
-                <button
-                  className="edit-btn"
-                  onClick={() => {
-                    setEditingIndex(index)
-                    setEditText(task.text)
-                  }}
-                >
-                  ✎
-                </button>
-
-                <button
-                  className="delete-btn"
-                  onClick={() => setTaskToDelete(index)}
-                >
-                  🗑
-                </button>
               </>
             )}
           </div>
