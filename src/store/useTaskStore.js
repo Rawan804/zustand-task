@@ -26,6 +26,11 @@ export const useTaskStore=create((set)=>({
 
     toogleTask:(index)=>set((state)=>
         ({tasks:state.tasks.map((tasks,currentIndex)=>currentIndex===index?
-            {...tasks,completed:!tasks.completed}:tasks)}))
+            {...tasks,completed:!tasks.completed}:tasks)})),
+            editTask:(index,newText)=>set((state)=>({
+              tasks:state.tasks.map((task,currentIndex)=>
+                currentIndex===index?{...task,text:newText}:task
+              )
+            }))
 }))
 

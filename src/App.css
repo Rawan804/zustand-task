@@ -1,14 +1,22 @@
-
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #f7f4ff;
+  color: #302746;
+  font-family: Arial, sans-serif;
+}
 .todo-app {
   width: 90%;
   max-width: 560px;
   margin: 50px auto;
-  padding: 25px;
+  padding: 28px;
   box-sizing: border-box;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+
+  background-color: #ffffff;
+  border: none;
+  border-radius: 20px;
+
+  box-shadow: 0 15px 40px rgba(109, 40, 217, 0.12);
 }
 
 
@@ -18,18 +26,21 @@
 }
 
 .todo-header h1 {
-   font-family:'Times New Roman', Times, serif;
-  color: rgb(15, 15, 213);
-  font-size: 28px;
+  font-family: Georgia, 'Times New Roman', serif;
+  color: #6d28d9;
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.3px;
   margin-bottom: 8px;
 }
-
 .todo-header p {
-  font-family:'Times New Roman', Times, serif;
-  color: rgb(99, 114, 160);
-  line-height: 1.5;
+  font-family: Arial, sans-serif;
+  color: #85769f;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: center;
 }
-
 
 .task-list {
   display: flex;
@@ -57,30 +68,53 @@
   text-decoration: line-through;
   color: #999;
 }
-
 .task-actions {
   display: flex;
-  gap: 6px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .task-actions button {
-  padding: 7px 10px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid transparent;
+  border-radius: 11px;
+  font-size: 18px;
   cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.complete-btn {
+  background-color: #f0fdf4;
+  color: #15803d;
 }
 
 .complete-btn:hover {
-  background-color: #e5f5e9;
+  background-color: #dcfce7;
+  transform: translateY(-2px);
+}
+
+.complete-btn.is-completed {
+  background-color: #ede9fe;
+  color: #6d28d9;
+}
+
+.delete-btn {
+
+  color: #e11d48;
 }
 
 .delete-btn:hover {
-  color: red;
-  background-color: #ffe8e8;
+  background-color: #ffe4e6;
+  transform: translateY(-2px);
 }
-
-
 .add-row {
   display: flex;
   gap: 8px;
@@ -102,16 +136,13 @@
 
 .add-btn {
   padding: 10px 15px;
-  background-color:rgb(63, 121, 171);
+background: #7c3aed;
   color: white;
   border: none;
   border-radius: 7px;
   cursor: pointer;
 }
 
-.add-btn:hover {
-  background-color: #236a91;
-}
 
 
 @media (max-width: 520px) {
@@ -120,28 +151,169 @@
     margin: 0;
     min-height: 100vh;
     border-radius: 0;
-    border: none;
     padding: 20px;
   }
 
   .task-item {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .task-text {
+    flex: 1;
+    min-width: 0;
   }
 
   .task-actions {
-    width: 100%;
+    width: auto;
+    flex-shrink: 0;
   }
 
   .task-actions button {
-    flex: 1;
+    flex: none;
   }
 
   .add-row {
-    flex-direction: column;
+    flex-direction: row;
+  }
+
+  .task-input {
+    flex: 1;
+    min-width: 0;
   }
 
   .add-btn {
-    width: 100%;
+    width: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
   }
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(39, 20, 64, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+
+.confirm-box {
+  width: 100%;
+  max-width: 340px;
+  box-sizing: border-box;
+  padding: 28px 24px;
+  background: #ffffff;
+  border: 1px solid #eee5ff;
+  border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(76, 29, 149, 0.2);
+  text-align: center;
+  animation: confirm-appear 0.2s ease;
+}
+
+.confirm-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f3e8ff;
+  color: #7c3aed;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.confirm-box h3 {
+  margin: 0 0 10px;
+  color: #352447;
+  font-size: 21px;
+}
+
+.confirm-box p {
+  margin: 0 0 24px;
+  color: #82748f;
+  font-size: 14px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.confirm-actions button {
+  flex: 1;
+  padding: 11px 8px;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.confirm-delete-btn {
+  background: #7c3aed;
+  color: white;
+}
+
+.confirm-delete-btn:hover {
+  background: #6d28d9;
+}
+
+.confirm-cancel-btn {
+  background: #f3effa;
+  color: #6d28d9;
+}
+
+.confirm-cancel-btn:hover {
+  background: #e9dffc;
+}
+
+@keyframes confirm-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.tasks-count {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.tasks-count span {
+  flex: 1;
+  padding: 14px 10px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+.tasks-count span:first-child {
+  background: #dcfce7;
+  color: #166534;
+}
+
+
+.tasks-count span:last-child {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+
+.empty {
+  text-align: bottom;
+  color: #9ca3af; 
 }
